@@ -35,12 +35,9 @@ export default function MultiSelect({ rowId, selectedMultiOptions, updateSelecte
     }
 
     const updatedOptions = [...options, newOption];
-    setOptions(updatedOptions); // Update the local storage and component state with the new option
+    setOptions(updatedOptions);
     setNewOption("");
     setError("");
-
-    // Trigger re-render to show the new row
-    updateSelectedMultiOptions(rowId, selected); // Make sure the parent component is aware of the updated options
   };
 
   // Close dropdown if clicked outside
