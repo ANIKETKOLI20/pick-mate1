@@ -11,6 +11,8 @@ export default function SingleSelect({ rowId, selectedOptions, updateSelectedOpt
 
     // Initialize globallySelectedOptions if not present
     const globallySelected = JSON.parse(localStorage.getItem("globallySelectedOptions")) || [];
+
+    // Set default options if not present in localStorage
     if (!localStorage.getItem("defaultOptions")) {
       localStorage.setItem("defaultOptions", JSON.stringify(defaultOptions));
     }
@@ -18,7 +20,11 @@ export default function SingleSelect({ rowId, selectedOptions, updateSelectedOpt
     // Filter available options by excluding globally selected options
     const storedOptions = JSON.parse(localStorage.getItem("defaultOptions"));
     setAvailableOptions(storedOptions.filter(option => !globallySelected.includes(option)));
-  }, [selectedOptions]);
+
+    // Initialize selected option from locally stored selection
+    const selectedOption = globallySelected.find(option => option === selectedOptions[rowId]);
+    setSelected(selectedOption || ""); // Set initial state if there's no previous selection
+  }, [rowId, selectedOptions]);
 
   const handleChange = (value) => {
     // Update globallySelectedOptions in localStorage
